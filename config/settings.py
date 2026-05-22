@@ -11,10 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-import os
 from dotenv import load_dotenv
-import dj_database_url
-
+from datetime import timedelta
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,16 +46,18 @@ INSTALLED_APPS = [
     
     'core',
     
-    'apps.authentication',
-    'apps.employees',
-    'apps.attendance',
-    'apps.leaves',
-    'apps.payroll',
-    'apps.tasks',
-    'apps.analytics',
-    'apps.reports',
-    'apps.notifications',
-    'apps.dashboard',
+    # your apps
+    "authentication",
+    "employees",
+    "attendance",
+    "leaves",
+    "payroll",
+    "tasks",
+    "analytics",
+    "reports",
+    "notifications",
+    "dashboard",
+    
 ]
 
 MIDDLEWARE = [
@@ -104,12 +104,37 @@ DATABASES = {
     }
 }
 
+# import os
+# import dj_database_url
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "wexadb",
+#         "USER": "wexadb_user",
+#         "PASSWORD": "pVZl9Vjc4x5TGIw8Vgq9Jan0OMZ5V5GB",
+#         "HOST": "dpg-d88695eq1p3s73fvauv0-a.oregon-postgres.render.com",
+#         "PORT": "5432",
+#     }
+# }
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://wexafrontend-five.vercel.app",
+]
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
 }
 
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+AUTH_USER_MODEL = "authentication.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
